@@ -13,8 +13,8 @@ Parallel processing of input:
 Projection of input:
     # projection: EPSG:4326
 Zoom levels:
-    maximum-zoom: 10
-    minimum-zoom: 6
+    maximum-zoom: 19
+    minimum-zoom: 0
     # extend-zooms-if-still-droppping: True
     # one-tile: z/x/y
 Tile resolution:
@@ -60,8 +60,8 @@ Line and polygon simplification:
     # no-tiny-polygon-reduction: True
     # no-simplification-of-shared-nodes: True
 Attempts to improve shared polygon boundaries:
-    detect-shared-borders: True
-    grid-low-zooms: True
+    # detect-shared-borders: True
+    # grid-low-zooms: True
 Controlling clipping to tile boundaries:
     # buffer: 5
     # no-clipping: True
