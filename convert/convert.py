@@ -15,6 +15,7 @@ from pathlib import Path
 def cli_convert(input, output, config, retain):
     """Simple program that greets NAME for a total of COUNT times."""
     click.secho('🔄 Starting File Conversion 🔄', bg="blue")
+    # CLI VALIDATION
     is_valid = check_compatibility()
     if is_valid != True:
         click.secho('Tool validation failed, please see above errors.', bg='red', bold=True)
@@ -22,17 +23,21 @@ def cli_convert(input, output, config, retain):
     else:
         click.secho('Your Tippecanoe and Ogr2ogr install are compatible!', fg='green')
 
-    fgb_success = convert_to_fgb(input)
-    
+    # FGB CONVERSION
+    fgb_success = convert_to_fgb(input) 
     if fgb_success != True:
         click.secho('Conversion failed, please see above errors.', bg='red', bold=True)
         return
     else:
         click.secho('Flat geobuf converted.', fg='green')
-    fgb_success = convert_to_fgb(input)
 
+    # TIPPECANOE
     config_dict = run_tippecanoe('./_converted.fgb', config, './_converted.mbtiles')
+    
+    # PMTILES
     convert_mbtiles_to_pmtiles('./_converted.mbtiles', output, config_dict)
+
+    #CLEANUP
     if not retain:
         click.echo('Recycling old files...',)
         os.remove('_converted.fgb')
