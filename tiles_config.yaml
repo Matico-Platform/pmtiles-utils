@@ -1,0 +1,108 @@
+### TIPPECANOE OPTIONS
+## To use the below options, uncomment the row and set the YAML value
+## See https://github.com/felt/tippecanoe for full options docs
+Tileset description and attribution:
+    # name: Test
+    # attribution: Test2
+    # description: My Dataset
+Input files and layer names:
+    # layer: streets
+    # named-layer: {layer-json}
+Parallel processing of input:
+    # read-parrallel: True
+Projection of input:
+    # projection: EPSG:4326
+Zoom levels:
+    maximum-zoom: 10
+    minimum-zoom: 6
+    # extend-zooms-if-still-droppping: True
+    # one-tile: z/x/y
+Tile resolution:
+    # full-detail: 12
+    # low-detail: 12
+    # minimum-detail: 7
+Filtering feature attributes:
+    # exclude: [id, test]
+    # include: [population, area]
+    # exclude-all: True
+Modifying feature attributes:
+    # attribute-type
+    # attribute-description
+    # accumulate-attribute
+    # empty-csv-columns-are-null
+    # convert-stringified-ids-to-numbers
+    # use-attribute-for-id
+Filtering features by attributes:
+    # feature-filter-file
+    # feature-filter
+Dropping a fixed fraction of features by zoom level:
+    # drop-rate: 2.5
+    # base-zoom: 10
+    # drop-lines: True
+    # drop-polygons: True
+    # cluster-distance: 25
+Dropping or merging a fraction of features to keep under tile size limits:
+    # drop-densest-as-needed: True 
+    # drop-fraction-as-needed: True
+    # drop-smallest-as-needed: True
+    # coalesce-densest-as-needed: True
+    # coalesce-fraction-as-needed: True
+    # coalesce-smallest-as-needed: True 
+    # force-feature-limit: True
+    # cluster-densest-as-needed: True
+Dropping tightly overlapping features:
+    # gamma: 2
+    # increase-gamma-as-needed: True
+Line and polygon simplification:
+    # simplification: 5
+    # no-line-simplification: True
+    # simplify-only-low-zooms: True
+    # no-tiny-polygon-reduction: True
+    # no-simplification-of-shared-nodes: True
+Attempts to improve shared polygon boundaries:
+    detect-shared-borders: True
+    grid-low-zooms: True
+Controlling clipping to tile boundaries:
+    # buffer: 5
+    # no-clipping: True
+    # no-duplication: True
+Reordering features within each tile:
+    # preserve-input-order: True
+    # reorder: True
+    # coalesce: True
+    # reverse: True
+    # hilbert: True
+Adding calculated attributes:
+    # calculate-feature-density: True
+    # generate-ids: True
+Trying to correct bad source geometry:
+    # detect-longitude-wraparound: True
+    # use-source-polygon-winding: True
+    # reverse-source-polygon-winding: True
+    # clip-bounding-box: [0, 0, 10, 10]
+Filtering tile contents:
+    # prefilter: echo "Making a tile"
+    # postfilter: echo "Made a tile."
+Setting or disabling tile size limits:
+    # maximum-tile-bytes: 50000000
+    # maximum-tile-features: 500000
+    no-feature-limit: True
+    no-tile-size-limit: True
+    no-tile-compression: True
+    # no-tile-stats: True
+    # tile-stats-attributes-limit: True
+    # tile-stats-sample-values-limit: True
+    # tile-stats-values-limit: True
+Temporary storage:
+    # temporary-directory: ./tmp
+Progress indicator:
+    # quiet: True
+    # no-progress-indicator: True
+    # progress-interval: 5
+    # json-progress: True
+    # version: (version number)
+Output tileset:
+    # output: path.mbtiles
+    # output-to-directory: ./tmp/directory
+    # force: True
+    # allow-existing: True
