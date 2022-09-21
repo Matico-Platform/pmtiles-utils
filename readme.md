@@ -17,6 +17,8 @@ From the repo root, in your terminal:
 python convert
 # Follow prompts...
 ```
+### Config
+Change config in `tiles_config.yaml` or create a new version and pass that in to the CLI.
 
 ## Viewer
 ### Install
