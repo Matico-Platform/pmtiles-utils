@@ -12,11 +12,11 @@ External requirements:
 - [Tippecanoe > v2.1.x](https://github.com/felt/tippecanoe)
 - [ogr2ogr (gdal) > v3.1.x](https://gdal.org/download.html)
 ### Run
-From the repo root, in your terminal:
-```
-python convert
-# Follow prompts...
-```
+After install python dependencies and making sure you have Tippecanoe and Gdal (ogr2ogr) available in your CLI environment, you can run `python convert` from the repo root in your terminal:
+![Prompt based](/docs/img/interactive_cli.png)
+Alternatively, you can pass the arguments as flags directly in one line. Run `python convert --help` for more info.
+![Flag based](/docs/img/flags.png)
+
 ### Config
 Change config in `tiles_config.yaml` or create a new version and pass that in to the CLI.
 

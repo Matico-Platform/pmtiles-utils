@@ -1,3 +1,3 @@
-from convert import cli_convert
+from cli import cli_convert
 
 cli_convert()

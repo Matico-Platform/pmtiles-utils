@@ -13,7 +13,7 @@ Parallel processing of input:
 Projection of input:
     # projection: EPSG:4326
 Zoom levels:
-    maximum-zoom: 19
+    maximum-zoom: 11
     minimum-zoom: 0
     # extend-zooms-if-still-droppping: True
     # one-tile: z/x/y
