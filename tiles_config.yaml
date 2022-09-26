@@ -9,12 +9,12 @@ Input files and layer names:
     # layer: streets
     # named-layer: {layer-json}
 Parallel processing of input:
-    # read-parrallel: True
+    read-parallel: True
 Projection of input:
     # projection: EPSG:4326
 Zoom levels:
-    maximum-zoom: 11
-    minimum-zoom: 0
+    maximum-zoom: 9
+    minimum-zoom: 8
     # extend-zooms-if-still-droppping: True
     # one-tile: z/x/y
 Tile resolution:
@@ -45,7 +45,7 @@ Dropping or merging a fraction of features to keep under tile size limits:
     # drop-densest-as-needed: True 
     # drop-fraction-as-needed: True
     # drop-smallest-as-needed: True
-    # coalesce-densest-as-needed: True
+    coalesce-densest-as-needed: True
     # coalesce-fraction-as-needed: True
     # coalesce-smallest-as-needed: True 
     # force-feature-limit: True
@@ -54,7 +54,7 @@ Dropping tightly overlapping features:
     # gamma: 2
     # increase-gamma-as-needed: True
 Line and polygon simplification:
-    # simplification: 5
+    simplification: 10
     # no-line-simplification: True
     # simplify-only-low-zooms: True
     # no-tiny-polygon-reduction: True
@@ -79,15 +79,16 @@ Trying to correct bad source geometry:
     # detect-longitude-wraparound: True
     # use-source-polygon-winding: True
     # reverse-source-polygon-winding: True
-    # clip-bounding-box: [0, 0, 10, 10]
+    ## Note: clip bounds as minlon,minlat,maxlon,maxlat
+    # clip-bounding-box: "25,-5.5,35,1.5"
 Filtering tile contents:
     # prefilter: echo "Making a tile"
     # postfilter: echo "Made a tile."
 Setting or disabling tile size limits:
-    # maximum-tile-bytes: 50000000
-    # maximum-tile-features: 500000
-    no-feature-limit: True
-    no-tile-size-limit: True
+    maximum-tile-bytes: 2500000
+    maximum-tile-features: 20000
+    # no-feature-limit: True
+    # no-tile-size-limit: True
     no-tile-compression: True
     # no-tile-stats: True
     # tile-stats-attributes-limit: True
