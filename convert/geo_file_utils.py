@@ -6,14 +6,14 @@ from pathlib import Path
 from pmtiles import convert
 from utils import flatten_data
 
-def convert_to_fgb(input: str) -> bool:
+def convert_to_fgb(input: str, output_name: str) -> bool:
     click.secho('🔄 Converting to flatgeobuf 🔄', bg="blue")
     if(not Path(f"./{input}").exists()): 
         click.secho(f'Error: {input} does not exist!', fg='red', underline=True, bold=True)
         return False
     else:
         df = pyogrio.read_dataframe(f"./{input}")
-        pyogrio.write_dataframe(df, "./_converted.fgb")
+        pyogrio.write_dataframe(df, f"./{output_name}.fgb")
         return True
 
 def run_tippecanoe(input_path: str, config_path: str, output_path: str) -> dict:
