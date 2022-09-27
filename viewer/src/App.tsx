@@ -32,7 +32,10 @@ export default function App() {
       tileSize: 256,
       updateTriggers: {
         getFillColor: [colorScale, JSON.stringify(colorDomain), property],
-        stroked: colorScale
+        stroked: colorScale,
+        minZoom: minZoom,
+        maxZoom: maxZoom,
+        data: filePath
       }
 
     })
