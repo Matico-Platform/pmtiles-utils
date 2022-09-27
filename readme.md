@@ -38,3 +38,11 @@ cd viewer && npm run dev
 ### Config and Files
 1. Copy your PMTiles file to `viewer/public`
 2. Change the path in `viewer/src/config.ts`
+    - In Config, you can set the following options:
+        - filePath: the path to your file from the `public` folder (eg. "/output.pmtiles")
+        - minZoom: the lowest available zoom level (most zoomed out)
+        - maxzoom: the max available zoom level (most zoomed in) - if this is greater than your tileset's avaiable data, the map will keep looking for data, and may result in a blank map
+        - colorScale: named color scheme from [d3's color scales](https://github.com/d3/d3-scale-chromatic/blob/main/README.md) like "turbo" or "blues" or "RdBu"
+        - colorDomain: a min and max value for the range of colors (eg. [0, 5000])
+        - property: data property to access to color (eg. "population")
+    - You can change any config values except `filePath` and the changes will be reflected in your browser immediately. `filePath` changes will automatically reload your window.

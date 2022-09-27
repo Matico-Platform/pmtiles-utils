@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DeckGL from "@deck.gl/react/typed";
 import {
   PMTLayer,
 } from "@maticoapp/deck.gl-pmtiles";
 import { Config } from './config';
 import { ConfigSpec, generateColorFunc, BgTileLayer, INITIAL_VIEW_STATE } from './utils';
+import { ColorRange } from "./ColorRange";
 
 const {
   filePath, maxZoom, minZoom, colorScale, property, colorDomain
@@ -12,6 +13,7 @@ const {
 
 
 export default function App() {
+  const [pathInner, setPathInner] = useState(filePath);
   const [tileContent, setTileContent] = useState({})
   const colorFunction = generateColorFunc(colorScale, colorDomain, property);
 
@@ -35,11 +37,18 @@ export default function App() {
         stroked: colorScale,
         minZoom: minZoom,
         maxZoom: maxZoom,
-        data: filePath
       }
 
     })
   ];
+
+  useEffect(() => {
+    if (pathInner !== filePath) {
+      setPathInner(filePath);
+      alert(`New filepath (${filePath}) - refreshing...`)
+      window.location.reload()
+    }
+  }, [filePath])
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
@@ -56,57 +65,10 @@ export default function App() {
       }
       {(!!colorScale && !!property && !!colorDomain) && (
         <div style={{ position: 'fixed', bottom: 0, left: 0, background: 'rgba(255,255,255,0.9)', padding: '1em' }}>
-            <ColorRange colorFunction={colorFunction} colorDomain={colorDomain} property={property} />
+          <h1 style={{ margin: '0 0 .5em 0', padding: 0 }}>{property}</h1>
+          <ColorRange colorFunction={colorFunction} colorDomain={colorDomain} property={property} />
         </div>
       )}
     </div>
   );
-}
-
-const ColorRange: React.FC<{ colorFunction: (f: any) => number[], colorDomain: [number, number], property: string }> = ({ colorFunction, colorDomain, property }) => {
-  const rangeIncrement = (colorDomain[1] - colorDomain[0]) / 9;
-  const range = [colorDomain[0], ...(Array.from({ length: 9 }, (_, i) => colorDomain[0] + i * rangeIncrement))];
-  return (
-    
-    <div style={{
-      display:'flex',
-      flexDirection:'column'
-    }}>
-      <h1>{property}</h1>
-      <div style={{
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between'
-      }}>
-        {range.map((r, i) => (
-          <div key={i} style={{
-            width: '10px',
-            height: '10px',
-            background: `rgb(${colorFunction({properties: {[property]: r}}).join(',')})`
-          }}></div>
-        ))}
-        </div>
-      <div style={{
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between'
-      }}>
-        {range.map((r, i) => (
-            (i === 0 || i % 2 === 0) ? <p key={i}>{formatNumber(r)}</p> : null
-          ))
-        }
-        </div>
-      </div>
-  )
-
-}
-function formatNumber(number: number): string{
-  const val = +number;
-  if (isNaN(val)) return `${number}`;
-  return new Intl.NumberFormat(undefined, {
-      notation: "compact",
-      maximumFractionDigits: 4,
-      maximumSignificantDigits: 2,
-      compactDisplay: "short"
-  }).format(val);
 }
