@@ -1,47 +1,22 @@
-import React, { useState, useMemo, useRef } from "react";
+import { useState } from "react";
 import DeckGL from "@deck.gl/react/typed";
-import { BitmapLayer, GeoJsonLayer } from "@deck.gl/layers/typed";
-import { TileLayer } from "@deck.gl/geo-layers/typed";
 import {
   PMTLayer,
 } from "@maticoapp/deck.gl-pmtiles";
 import { Config } from './config';
+import { ConfigSpec, generateColorFunc, BgTileLayer, INITIAL_VIEW_STATE } from './utils';
 
 const {
-  filePath, maxZoom, minZoom
-} = Config;
+  filePath, maxZoom, minZoom, colorScale, property, colorDomain
+} = Config as ConfigSpec;
 
-const INITIAL_VIEW_STATE = {
-  longitude: 0,
-  latitude: 0,
-  zoom: 0,
-  pitch: 0,
-  bearing: 0,
-};
 
 export default function App() {
   const [tileContent, setTileContent] = useState({})
+  const colorFunction = generateColorFunc(colorScale, colorDomain, property);
 
   const layers = [
-    new TileLayer({
-      id: 'TileLayer',
-      data: 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      maxZoom: 19,
-      minZoom: 0,
-      renderSubLayers: props => {
-        const {
-          // @ts-ignore
-          bbox: { west, south, east, north }
-        } = props.tile;
-
-        return new BitmapLayer(props, {
-          data: null,
-          image: props.data,
-          bounds: [west, south, east, north]
-        });
-      },
-      pickable: true,
-    }),
+    BgTileLayer,
     new PMTLayer({
       id: "pmtiles-layer",
       data: filePath,
@@ -49,11 +24,17 @@ export default function App() {
       autoHighlight: true,
       maxZoom,
       minZoom,
-      getFillColor: (d) => [255, 120, 120],//incomeScale(d.properties?.["PerCapitaIncome"]),
-      stroked: true,
+      //@ts-ignore
+      getFillColor: colorFunction,
+      stroked: !colorScale,
       lineWidthMinPixels: 1,
       pickable: true,
       tileSize: 256,
+      updateTriggers: {
+        getFillColor: [colorScale, JSON.stringify(colorDomain), property],
+        stroked: colorScale
+      }
+
     })
   ];
 
@@ -70,6 +51,59 @@ export default function App() {
           {JSON.stringify(tileContent, null, 2)}
         </pre>
       }
+      {(!!colorScale && !!property && !!colorDomain) && (
+        <div style={{ position: 'fixed', bottom: 0, left: 0, background: 'rgba(255,255,255,0.9)', padding: '1em' }}>
+            <ColorRange colorFunction={colorFunction} colorDomain={colorDomain} property={property} />
+        </div>
+      )}
     </div>
   );
+}
+
+const ColorRange: React.FC<{ colorFunction: (f: any) => number[], colorDomain: [number, number], property: string }> = ({ colorFunction, colorDomain, property }) => {
+  const rangeIncrement = (colorDomain[1] - colorDomain[0]) / 9;
+  const range = [colorDomain[0], ...(Array.from({ length: 9 }, (_, i) => colorDomain[0] + i * rangeIncrement))];
+  return (
+    
+    <div style={{
+      display:'flex',
+      flexDirection:'column'
+    }}>
+      <h1>{property}</h1>
+      <div style={{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between'
+      }}>
+        {range.map((r, i) => (
+          <div key={i} style={{
+            width: '10px',
+            height: '10px',
+            background: `rgb(${colorFunction({properties: {[property]: r}}).join(',')})`
+          }}></div>
+        ))}
+        </div>
+      <div style={{
+        display:'flex',
+        flexDirection:'row',
+        justifyContent:'space-between'
+      }}>
+        {range.map((r, i) => (
+            (i === 0 || i % 2 === 0) ? <p key={i}>{formatNumber(r)}</p> : null
+          ))
+        }
+        </div>
+      </div>
+  )
+
+}
+function formatNumber(number: number): string{
+  const val = +number;
+  if (isNaN(val)) return `${number}`;
+  return new Intl.NumberFormat(undefined, {
+      notation: "compact",
+      maximumFractionDigits: 4,
+      maximumSignificantDigits: 2,
+      compactDisplay: "short"
+  }).format(val);
 }
