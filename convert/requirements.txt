@@ -3,3 +3,4 @@ pmtiles
 pyogrio
 gdal
 geopandas
+pyyaml
