@@ -58,10 +58,13 @@ def cli_convert(input, output, config, retain, force):
 
     #CLEANUP
     if not retain:
-        click.echo('Recycling old files...',)
-        if input_type != 'fgb':
-            os.remove(f'{output_name}.fgb')
-        os.remove(f'{output_name}.mbtiles')
+        try:
+            click.echo('Recycling old files...',)
+            if input_type != 'fgb':
+                os.remove(f'{output_name}.fgb')
+            os.remove(f'{output_name}.mbtiles')
+        except:
+            click.echo("Error deleting files, please delete manually.")
     click.secho('🔄 Conversion Complete! 🔄', bg="green")
     
   
