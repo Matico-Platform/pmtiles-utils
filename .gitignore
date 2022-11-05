@@ -1,3 +1,13 @@
+# configs and data files
+*.gpkg
+*.fgb
+*.mbtiles
+*.pmtiles
+*.yaml
+# allow files already there
+!tiles_config.yaml
+!input.gpkg
+
 # Logs
 logs
 *.log
