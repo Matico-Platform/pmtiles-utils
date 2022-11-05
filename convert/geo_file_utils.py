@@ -42,10 +42,13 @@ def run_tippecanoe(input_path: str, config_path: str, output_path: str) -> dict:
     subprocess.run(tc_args)
     return config_dict
 
-def convert_mbtiles_to_pmtiles(input_path: str, output_path:str, config: dict) -> bool:
-    click.secho('🔄 Building PMTiles from MBTiles 🔄', bg="blue")
+
+def convert_mbtiles_to_pmtiles(
+    input_path: str, output_path: str, config: dict
+) -> bool:
+    click.secho("🔄 Building PMTiles from MBTiles 🔄", bg="blue")
     max_zoom = 18
-    if type(config['maximum-zoom']) is int:
-        max_zoom = config['maximum-zoom']
-    convert.mbtiles_to_pmtiles(input_path, output_path, max_zoom, True)
+    if type(config["maximum-zoom"]) is int:
+        max_zoom = config["maximum-zoom"]
+    convert.mbtiles_to_pmtiles(input_path, output_path, max_zoom)
     return True
