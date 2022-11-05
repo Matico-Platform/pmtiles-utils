@@ -1,0 +1,28 @@
+[project]
+name = "pmtiles_utils"
+description = """
+    Some helpful utils for PMTiles
+    """
+readme = "readme.md"
+requires-python = ">=3.9"
+version = "0.0.1"
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = "./convert/requirements.txt"}
+
+[project.urls]
+repository = "https://github.com/Matico-Platform/pmtiles-utils"
+
+[build-system]
+requires = ['setuptools']
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+pmutils-convert = "convert.cli:cli_convert"
+
+[tool.black]
+line-length = 79
+
+[tool.mypy]
+ignore_missing_imports = true
