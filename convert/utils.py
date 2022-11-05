@@ -1,6 +1,5 @@
 import click
 import subprocess
-import pyogrio
 
 def flatten_data(y):
     out = {}
@@ -14,7 +13,15 @@ def check_compatibility() -> bool:
     is_valid = True
 
     click.echo('Checking ogr2ogr / gdal compatibility...')
-    gdal_is_valid = "FlatGeobuf" in pyogrio.list_drivers()
+    try:
+        gdal_output = subprocess.run(
+            ["ogrinfo", "--formats"],
+            check=True,
+            capture_output=True)
+        gdal_is_valid = "FlatGeobuf" in gdal_output.stdout.decode()
+    except FileNotFoundError:
+        gdal_is_valid = False
+
     if gdal_is_valid:
         click.secho('Gdal supports FlatGeoBuf!', fg='green')
     else:
