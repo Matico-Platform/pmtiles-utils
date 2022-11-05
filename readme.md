@@ -6,10 +6,10 @@ Some helpful utils :)
 
 ### Install Convert
 
-From the repo root, in your terminal:
+From a folder in your machine, type in your terminal:
 
-``` bash
-pip install -r convert/requirements.txt
+```bash
+pip install git+https://github.com/Matico-Platform/pmtiles-utils
 ```
 
 External requirements:
@@ -19,9 +19,9 @@ External requirements:
 
 ### Run Convert
 
-After install python dependencies and making sure you have Tippecanoe and Gdal (ogr2ogr) available in your CLI environment, you can run `python convert` from the repo root in your terminal:
+After install python dependencies and making sure you have Tippecanoe and Gdal (ogr2ogr) available in your CLI environment, you can run `pmutils-convert` from the repo root in your terminal:
 ![Prompt based](/docs/img/interactive_cli.png)
-Alternatively, you can pass the arguments as flags directly in one line. Run `python convert --help` for more info.
+Alternatively, you can pass the arguments as flags directly in one line. Run `pmutils-convert --help` for more info.
 ![Flag based](/docs/img/flags.png)
 
 ### Config
