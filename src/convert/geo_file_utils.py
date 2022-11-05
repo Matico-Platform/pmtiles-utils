@@ -1,9 +1,11 @@
 import subprocess
+from pathlib import Path
+
 import click
 import yaml
-from pathlib import Path
 from pmtiles import convert
-from utils import flatten_data
+
+from convert.utils import flatten_data
 
 
 def convert_to_fgb(input: str, output_name: str) -> bool:
